@@ -8,6 +8,7 @@ The data is simulated, so the **true** effect of every channel is known. That ma
 > 1. [Multi-channel attribution & ROAS](https://github.com/paolofelix/multichannel-attribution-roas): which channel gets credit?
 > 2. [Cohort LTV & CAC payback](https://github.com/paolofelix/cohort-ltv-cac-payback): what is a customer worth, and how fast does spend pay back?
 > 3. **Marketing Mix Model**: what would have happened *without* each channel?
+> 4. [Lead Scoring Model](https://github.com/paolofelix/lead-scoring-model): which leads will actually close, and which should sales call first?
 
 ---
 
