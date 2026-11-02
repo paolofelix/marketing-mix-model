@@ -1,5 +1,9 @@
 # Marketing Mix Model: what actually drove revenue?
 
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://paolofelix-marketing-mix-model.streamlit.app/)
+
+**▶ [Try the interactive dashboard](https://paolofelix-marketing-mix-model.streamlit.app/)**: test any budget split against the true response curves, compare naive regression with the MMM, and see how one geo-lift test fixed Microsoft's estimate.
+
 A Bayesian Marketing Mix Model (MMM) built with [PyMC-Marketing](https://www.pymc-marketing.io/) that measures the **incremental** revenue from Google Search, Meta, Microsoft Ads and YouTube. It is calibrated with a geo-lift experiment and turned into a budget recommendation.
 
 The data is simulated, so the **true** effect of every channel is known. That makes it possible to check how close the model gets, which real-world MMMs can never do.
@@ -10,7 +14,7 @@ The data is simulated, so the **true** effect of every channel is known. That ma
 > 3. **Marketing Mix Model**: what would have happened *without* each channel?
 > 4. [Lead Scoring Model](https://github.com/paolofelix/lead-scoring-model): which leads will actually close, and which should sales call first?
 
-**Full results, tables and recommendations: [FINDINGS.md](FINDINGS.md)**
+📄 **[Full results, tables and recommendations →](FINDINGS.md)** · 📊 **[Open the live dashboard →](https://paolofelix-marketing-mix-model.streamlit.app/)**
 
 ---
 
@@ -64,6 +68,31 @@ See [FINDINGS.md](FINDINGS.md) for the evidence behind each point, the full vali
 
 ---
 
+## Interactive dashboard
+
+**Live app:** https://paolofelix-marketing-mix-model.streamlit.app/
+
+`dashboard/app.py` is a Streamlit app that lets anyone explore the data, check the model against the ground truth and try their own budget plans, all without running PyMC:
+
+| Tab | What you can do |
+|---|---|
+| **Spend & revenue** | Explore weekly revenue (promo weeks and the price increase marked) and spend by channel over any date range |
+| **Naive regression vs MMM** | See how simple regression gets every channel wrong, compared with the MMM's 90% intervals and the true ROAS, plus the spend correlation matrix |
+| **What drove revenue** | View the true weekly revenue breakdown by channel and control, and the model's total contribution vs the truth |
+| **Budget simulator** | Start from the current plan, the MMM recommendation or the true optimum, drag the weekly spend for each channel, and see the true revenue, ROAS and marginal ROAS |
+| **Carryover explorer** | Change the adstock rate for any channel and see how one week's spend spreads into the following weeks |
+| **Geo-lift calibration** | See Microsoft's ROAS and interval before and after adding the two-cell geo test |
+| **Model checks** | Review diagnostics (divergences, r̂, ESS), fit statistics, the in-sample fit and the 13-week holdout forecast |
+
+**How it works:** the Bayesian model takes minutes to fit, so the dashboard shows its published results from `03_model.ipynb`. The budget simulator and carryover explorer use the simulation's true response curves, so every plan you try is scored against reality. Scored this way, the MMM's recommendation gains +$3.0k per week, 97% of the best possible.
+
+To run it locally (from the repo root):
+
+    pip install -r dashboard/requirements.txt
+    streamlit run dashboard/app.py
+
+The dashboard has its own `dashboard/requirements.txt` (Streamlit, pandas, NumPy, Plotly). It doesn't need PyMC-Marketing.
+
 ## How to run
 
 All notebooks run in Google Colab and read the data directly from this repo.
@@ -90,6 +119,8 @@ Run the notebooks in order: `01` → `02` → `03`. Steps 3–6 run in one sessi
 ├── outputs/figures/              # all charts used in README and FINDINGS
 ├── src/simulate_data.py
 └── requirements.txt
+├── dashboard/                    # Streamlit app (app.py) and its requirements.txt
+├── .streamlit/                   # dashboard theme (config.toml)
 ```
 
-**Tech:** Python · PyMC-Marketing · PyMC · nutpie · ArviZ · pandas · NumPy · SciPy · Matplotlib
+**Tech:** Python · PyMC-Marketing · PyMC · nutpie · ArviZ · pandas · NumPy · SciPy · Matplotlib · Plotly · Streamlit
